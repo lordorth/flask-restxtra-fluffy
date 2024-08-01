@@ -7,31 +7,40 @@
  * @LastEditTime: 2023-06-16 18:04:55
  * @FilePath: /flask_restxtra_fluffy/README.md
 -->
-# Flask-RESTX-marshmallow
+# Flask-restXtra-fluffy
 
-Flask-RESTX-marshmallow is an extension for [Flask](https://flask.palletsprojects.com/en/latest/) and [Flask-RESTX](https://flask-restx.readthedocs.io/en/latest/), which is a successful practice combining flask_restx with marshmallow.
+Flask-restXtra-fluffy is a fork of [Flask-RESTX-marshmallow](https://github.com/1746104160/flask-restx-marshmallow) and an extension for [Flask](https://flask.palletsprojects.com/en/latest/) and [Flask-RESTX](https://flask-restx.readthedocs.io/en/latest/), which is a successful practice combining flask_restx with marshmallow.
 
 ## Compatibility
 
-Flask-RESTX-marshmallow requires Python 3.10+.
+Flask-restXtra-fluffy requires Python 3.10+.
 
 ## Installation
 
-Install the extension with pip:
+Currently not published.
 
-```bash
-pip install flask-restx-marshmallow
-```
+[//]: # (Install the extension with pip:)
 
-or with poetry:
+[//]: # ()
+[//]: # (```bash)
 
-```bash
-poetry add flask-restx-marshmallow
-```
+[//]: # (pip install flask-restx-marshmallow)
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (or with poetry:)
+
+[//]: # ()
+[//]: # (```bash)
+
+[//]: # (poetry add flask-restx-marshmallow)
+
+[//]: # (```)
 
 ## Quickstart
 
-With Flask-RESTX-marshmallow, you only import the api instance to route and document your endpoints.
+With Flask-restXtra-fluffy, you only import the api instance to route and document your endpoints.
 
 ```python
 import uuid
