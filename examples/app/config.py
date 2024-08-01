@@ -10,11 +10,11 @@ FilePath: /flask_restxtra_fluffy/examples/app/config.py
 
 from dataclasses import dataclass
 
-from app.configs import ProductionConfig
+from app.configs import DevelopingConfig
 
 
 @dataclass
-class Config(ProductionConfig):
+class Config(DevelopingConfig):
     """
     Author: 1746104160
     msg: user custom config

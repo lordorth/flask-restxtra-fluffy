@@ -8,7 +8,7 @@ LastEditTime: 2023-06-16 16:32:05
 FilePath: /flask_restxtra_fluffy/flask-restx-marshmallow/__init__.py
 """
 
-from flask_restx import Resource
+from flask_restx import Resource  # noqa
 
 from .api import Api
 from .namespace import Namespace
