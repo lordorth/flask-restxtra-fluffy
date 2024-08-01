@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "flask_restx_marshmallow"
-version = "0.1.1"
+name = "flask_restxtra_fluffy"
+version = "0.0.0"
 description = "A successful practice combining flask_restx with marshmallow"
-authors = ["1746104160 <shaojiahong2001@outlook.com>"]
+authors = ["Alexander Orth <alexander.orth@rub.de>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://github.com/1746104160/flask-restx-marshmallow"
-repository = "https://github.com/1746104160/flask-restx-marshmallow"
+homepage = "https://github.com/lordorth/flask_restxtra_fluffy"
+repository = "https://github.com/lordorth/flask_restxtra_fluffy"
 keywords = ["flask", "flask_restx", "sqlalchemy", "marshmallow"]
 classifiers = [
     "License :: OSI Approved :: MIT License",
