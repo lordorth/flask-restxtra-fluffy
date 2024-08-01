@@ -1,12 +1,13 @@
 """
-Description: patched salalchemy of flask_restx_marshmallow
+Description: patched salalchemy of flask_restxtra_fluffy
 version: 0.1.1
 Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 14:16:40
-FilePath: /flask_restx_marshmallow/flask_restx_marshmallow/sqlalchemy.py
+FilePath: /flask_restxtra_fluffy/flask_restxtra_fluffy/sqlalchemy.py
 """
+
 from typing import Optional
 from weakref import WeakKeyDictionary
 
@@ -55,9 +56,7 @@ class SQLAlchemy(original):
         Customize this by passing the ``query_class`` parameter to the extension.
         """
 
-        self.session: scoped_session[Session] = self._make_scoped_session(
-            session_options
-        )
+        self.session: scoped_session[Session] = self._make_scoped_session(session_options)
         """A :class:`sqlalchemy.orm.scoping.scoped_session` that creates instances of
         :class:`.Session` scoped to the current Flask application context. The session
         will be removed, returning the engine connection to the pool, when the
@@ -124,9 +123,7 @@ class SQLAlchemy(original):
             engine_options = {}
 
         self._engine_options: dict = engine_options
-        self._app_engines: WeakKeyDictionary[
-            Flask, dict[str | None, sa.engine.Engine]
-        ] = WeakKeyDictionary()
+        self._app_engines: WeakKeyDictionary[Flask, dict[str | None, sa.engine.Engine]] = WeakKeyDictionary()
         self._add_models_to_shell: bool = add_models_to_shell
 
         if app is not None:

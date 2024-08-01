@@ -5,8 +5,9 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 13:08:18
-FilePath: /flask_restx_marshmallow/examples/app/__init__.py
+FilePath: /flask_restxtra_fluffy/examples/app/__init__.py
 """
+
 import datetime
 import random
 import re
@@ -46,26 +47,18 @@ def create_app(config=Config) -> Flask:
     app.register_blueprint(api_blueprint)
 
     @jwt.token_in_blocklist_loader
-    def check_if_token_is_revoked(
-        _jwt_header: dict[str, str], jwt_payload: dict
-    ) -> bool:
+    def check_if_token_is_revoked(_jwt_header: dict[str, str], jwt_payload: dict) -> bool:
         jti: str = jwt_payload["jti"]
         exp: int = jwt_payload["exp"]
         user_id: int = jwt_payload["sub"]
-        return (
-            exp < datetime.datetime.now().timestamp()
-            or cache.get(jti)
-            or not Users.judge_user_valid_by_id(user_id)
-        )
+        return exp < datetime.datetime.now().timestamp() or cache.get(jti) or not Users.judge_user_valid_by_id(user_id)
 
     @jwt.user_identity_loader
     def user_identity_lookup(user: Users) -> str:
         return user.id.hex
 
     @jwt.user_lookup_loader
-    def user_lookup_callback(
-        _jwt_header: dict[str, str], jwt_payload: dict[str, str]
-    ) -> Users:
+    def user_lookup_callback(_jwt_header: dict[str, str], jwt_payload: dict[str, str]) -> Users:
         return Users.get_user_by_id(jwt_payload["sub"])
 
     @jwt.unauthorized_loader
@@ -149,9 +142,7 @@ def create_app(config=Config) -> Flask:
                 )  # pylint: disable=import-error
 
                 try:
-                    conn: Connection = connect(
-                        host=host, user=user, password=password, port=port
-                    )
+                    conn: Connection = connect(host=host, user=user, password=password, port=port)
                     cur: Cursor = conn.cursor()
                     sql: str = f"create database if not exists {PROJECT_NAME};"
                     cur.execute(sql)
@@ -173,9 +164,7 @@ def create_app(config=Config) -> Flask:
                 )
 
                 try:
-                    conn: connection = connect(
-                        host=host, user=user, password=password, port=port
-                    )
+                    conn: connection = connect(host=host, user=user, password=password, port=port)
                     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
                     cur: cursor = conn.cursor()
                     sql: str = f"create database {PROJECT_NAME};"
@@ -220,15 +209,9 @@ def create_app(config=Config) -> Flask:
             routes=["/system/route", "/personal"],
         )
         Roles.add(name="user", description="normal user")
-        Users.add(
-            name="administrator", password=token_urlsafe(6), roles=["admin"]
-        )
-        Users.add(
-            name="usermanager", password=token_urlsafe(6), roles=["usermanager"]
-        )
-        Users.add(
-            name="rolemanager", password=token_urlsafe(6), roles=["rolemanager"]
-        )
+        Users.add(name="administrator", password=token_urlsafe(6), roles=["admin"])
+        Users.add(name="usermanager", password=token_urlsafe(6), roles=["usermanager"])
+        Users.add(name="rolemanager", password=token_urlsafe(6), roles=["rolemanager"])
         Users.add(
             name="routemanager",
             password=token_urlsafe(6),

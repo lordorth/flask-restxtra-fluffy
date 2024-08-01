@@ -1,12 +1,13 @@
 """
-Description: patched api of flask_restx_marshmallow
+Description: patched api of flask_restxtra_fluffy
 version: 0.1.1
 Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-04 21:38:24
-FilePath: /flask_restx_marshmallow/flask_restx_marshmallow/api.py
+FilePath: /flask_restxtra_fluffy/flask_restxtra_fluffy/api.py
 """
+
 import importlib
 from dataclasses import dataclass
 from http import HTTPStatus
@@ -52,9 +53,7 @@ class Api(OriginalApi):
             app (Union[Flask, Blueprint]): app instance
         """
         super().init_app(app, **kwargs)
-        app.errorhandler(HTTPStatus.UNPROCESSABLE_ENTITY.value)(
-            handle_validation_error
-        )
+        app.errorhandler(HTTPStatus.UNPROCESSABLE_ENTITY.value)(handle_validation_error)
 
     @override
     def _register_apidoc(self, app: Flask) -> None:
@@ -139,14 +138,10 @@ class Api(OriginalApi):
         app_or_blueprint.add_url_rule(
             "/" + self.default_swagger_filename,
             "specs",
-            permission_required(authed_route)(
-                lambda: json.dumps(self.__schema__)
-            ),
+            permission_required(authed_route)(lambda: json.dumps(self.__schema__)),
         )
 
-    def register_doc(
-        self, app: Flask, blueprint: Optional[Blueprint] = None
-    ) -> None:
+    def register_doc(self, app: Flask, blueprint: Optional[Blueprint] = None) -> None:
         """register swagger documentation
 
         Args:
@@ -160,9 +155,7 @@ class Api(OriginalApi):
             "doc",
             self.render_doc,
         )
-        app_or_blueprint.add_url_rule(
-            self.prefix or "/", "root", self.render_root
-        )
+        app_or_blueprint.add_url_rule(self.prefix or "/", "root", self.render_root)
         app_or_blueprint.add_url_rule(
             "/" + self.default_swagger_filename,
             "specs",

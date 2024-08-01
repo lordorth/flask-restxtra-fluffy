@@ -1,12 +1,13 @@
-'''
+"""
 Description: 艺术集散地
 version: 1.0.0
 Author: 邵佳泓
 Date: 2023-06-23 10:39:57
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-07-11 12:50:16
-FilePath: /flask_restx_marshmallow/tests/test_swagger.py
-'''
+FilePath: /flask_restxtra_fluffy/tests/test_swagger.py
+"""
+
 from typing import NoReturn
 
 from flask import Flask, url_for

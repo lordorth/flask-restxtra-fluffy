@@ -1,11 +1,11 @@
 <!--
- * @Description: README for flask_restx_marshmallow
+ * @Description: README for flask_restxtra_fluffy
  * @version: 0.1.1
  * @Author: 1746104160
  * @Date: 2023-06-02 13:05:58
  * @LastEditors: 1746104160 shaojiahong2001@outlook.com
  * @LastEditTime: 2023-06-16 18:04:55
- * @FilePath: /flask_restx_marshmallow/README.md
+ * @FilePath: /flask_restxtra_fluffy/README.md
 -->
 # Flask-RESTX-marshmallow
 
@@ -40,7 +40,7 @@ import sqlalchemy as sa
 from flask import Flask
 from marshmallow import fields, post_load
 
-from flask_restx_marshmallow import (
+from flask_restxtra_fluffy import (
     Api,
     JSONParameters,
     QueryParameters,

@@ -5,8 +5,9 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 13:16:55
-FilePath: /flask_restx_marshmallow/examples/app/models/users.py
+FilePath: /flask_restxtra_fluffy/examples/app/models/users.py
 """
+
 from datetime import datetime
 from typing import Iterable, Optional
 from uuid import UUID, uuid4
@@ -26,7 +27,7 @@ from sqlalchemy_utils import (
     observes,
 )
 
-from flask_restx_marshmallow import permission_required
+from flask_restxtra_fluffy import permission_required
 
 
 @generic_repr
@@ -43,26 +44,16 @@ class Users(db.Model):
         nullable=True,
         comment="primary key for the table",
     )
-    created_on: Mapped[datetime] = Column(
-        DateTime, nullable=False, comment="created datetime"
-    )
+    created_on: Mapped[datetime] = Column(DateTime, nullable=False, comment="created datetime")
     description: Mapped[str] = Column(Text, comment="user description")
-    last_login: Mapped[datetime] = Column(
-        DateTime, nullable=False, comment="last login datetime"
-    )
-    name: Mapped[str] = Column(
-        String(20), unique=True, nullable=False, comment="user name"
-    )
+    last_login: Mapped[datetime] = Column(DateTime, nullable=False, comment="last login datetime")
+    name: Mapped[str] = Column(String(20), unique=True, nullable=False, comment="user name")
     password: Mapped[str] = Column(
-        PasswordType(
-            schemes=["pbkdf2_sha512", "md5_crypt"], deprecated=["md5_crypt"]
-        ),
+        PasswordType(schemes=["pbkdf2_sha512", "md5_crypt"], deprecated=["md5_crypt"]),
         nullable=False,
         comment="user password",
     )
-    roles: Mapped[list[models.Roles]] = relationship(
-        "Roles", secondary="user2role", back_populates="users"
-    )
+    roles: Mapped[list[models.Roles]] = relationship("Roles", secondary="user2role", back_populates="users")
     routes: Mapped[list[str]] = Column(
         ARRAY(String(50)).with_variant(ScalarListType(str), "sqlite", "mysql"),
         nullable=False,
@@ -83,14 +74,7 @@ class Users(db.Model):
         Args:
             roles (set[Roles]): set of role objects
         """
-        self.routes = list(
-            {
-                route.name
-                for role in roles
-                for route in role.routes
-                if role.valid
-            }
-        )
+        self.routes = list({route.name for role in roles for route in role.routes if role.valid})
 
     @classmethod
     def add(
@@ -118,15 +102,7 @@ class Users(db.Model):
                     last_login=datetime.now(),
                     name=name,
                     password=password,
-                    roles=[
-                        data
-                        for role_name in roles
-                        if (
-                            data := models.Roles.get_role_by_role_name(
-                                role_name
-                            )
-                        )
-                    ],
+                    roles=[data for role_name in roles if (data := models.Roles.get_role_by_role_name(role_name))],
                     valid=True,
                 )
             )
@@ -151,10 +127,7 @@ class Users(db.Model):
             db.session.commit()
             return {"success": True, "message": "delete user success"}
         current_user.ban()
-        current_app.logger.error(
-            f"{current_user.name} is trying to delete user (id="
-            f"{user_id}) that does not exist"
-        )
+        current_app.logger.error(f"{current_user.name} is trying to delete user (id=" f"{user_id}) that does not exist")
         return {"success": False, "message": "user does not exist"}
 
     @classmethod
@@ -173,8 +146,7 @@ class Users(db.Model):
             if roles := [
                 data
                 for role_name in data.pop("roles", [])
-                if role_name != "admin"
-                and (data := models.Roles.get_role_by_role_name(role_name))
+                if role_name != "admin" and (data := models.Roles.get_role_by_role_name(role_name))
             ]:
                 user.roles = roles
             data.update({"last_login": datetime.now()})
@@ -185,10 +157,7 @@ class Users(db.Model):
                 "message": "update user success",
             }
         current_user.ban()
-        current_app.logger.error(
-            f"{current_user.name} is trying to update user (id="
-            f"{user_id}) that does not exist"
-        )
+        current_app.logger.error(f"{current_user.name} is trying to update user (id=" f"{user_id}) that does not exist")
         return {"success": False, "message": "user does not exist"}
 
     @classmethod
@@ -235,9 +204,7 @@ class Users(db.Model):
             page (int, optional): current page. Defaults to 1.
             per_page (int, optional): page size. Defaults to 10.
         """
-        query = cls.query.filter(
-            cls.name != "administrator", cls.name.contains(keyword)
-        )
+        query = cls.query.filter(cls.name != "administrator", cls.name.contains(keyword))
         return {
             "users": query.order_by(
                 getattr(cls, order_prop, cls.created_on).desc()

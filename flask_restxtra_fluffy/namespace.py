@@ -1,12 +1,13 @@
 """
-Description: patched namespace of flask_restx_marshmallow
+Description: patched namespace of flask_restxtra_fluffy
 version: 0.1.1
 Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-04 21:38:50
-FilePath: /flask_restx_marshmallow/flask_restx_marshmallow/namespace.py
+FilePath: /flask_restxtra_fluffy/flask_restxtra_fluffy/namespace.py
 """
+
 from functools import wraps
 from http import HTTPStatus
 from types import FunctionType
@@ -33,9 +34,7 @@ class Namespace(OriginalNamespace):
     """
 
     def _handle_api_doc(self, cls: Model, doc: dict) -> None:
-        cls.__apidoc__ = (
-            None if doc is False else merge(getattr(cls, "__apidoc__", {}), doc)
-        )
+        cls.__apidoc__ = None if doc is False else merge(getattr(cls, "__apidoc__", {}), doc)
 
     @override
     def model(
@@ -66,9 +65,7 @@ class Namespace(OriginalNamespace):
             api_model: Model = Model(name, model, mask=mask, strict=strict)
             api_model.__apidoc__ = kwargs
             return self.add_model(name, api_model)
-        return super().model(
-            name=name, model=model, mask=mask, strict=strict, **kwargs
-        )
+        return super().model(name=name, model=model, mask=mask, strict=strict, **kwargs)
 
     def parameters(
         self,
@@ -107,9 +104,7 @@ class Namespace(OriginalNamespace):
                 }
 
                 @parser.location_loader("_and_".join(locations))
-                def load_data(
-                    request: flask.Request, schema: Parameters
-                ) -> MultiDictProxy:
+                def load_data(request: flask.Request, schema: Parameters) -> MultiDictProxy:
                     """load data from locations
 
                     Args:
@@ -124,29 +119,15 @@ class Namespace(OriginalNamespace):
                         match location:
                             case "body":
                                 try:
-                                    new_data.update(
-                                        request.get_json(
-                                            force=True, silent=True
-                                        )
-                                    )
+                                    new_data.update(request.get_json(force=True, silent=True))
                                 except TypeError:
                                     pass
                             case "formData":
                                 new_data.update(
-                                    {
-                                        key: value
-                                        if len(value) > 1
-                                        else value[0]
-                                        for key, value in request.form.lists()
-                                    }
+                                    {key: value if len(value) > 1 else value[0] for key, value in request.form.lists()}
                                 )
                                 new_data.update(
-                                    {
-                                        key: value
-                                        if len(value) > 1
-                                        else value[0]
-                                        for key, value in request.files.lists()
-                                    }
+                                    {key: value if len(value) > 1 else value[0] for key, value in request.files.lists()}
                                 )
                             case "query":
                                 new_data.update(request.args)
@@ -214,19 +195,15 @@ class Namespace(OriginalNamespace):
             message (str, optional): message. Defaults to "ok".
         """
         code = HTTPStatus(code)
-        description = (
-            API_DEFAULT_HTTP_CODE_MESSAGES[code]
-            if description is None
-            else description
-        )
+        description = API_DEFAULT_HTTP_CODE_MESSAGES[code] if description is None else description
         model = (
             model
             if model
-            else StandardSchema(message)
-            if code == HTTPStatus.OK
-            else DefaultHTTPErrorSchema(http_code=code)
-            if code != HTTPStatus.NO_CONTENT
-            else None
+            else (
+                StandardSchema(message)
+                if code == HTTPStatus.OK
+                else DefaultHTTPErrorSchema(http_code=code) if code != HTTPStatus.NO_CONTENT else None
+            )
         )
         name = name if code == HTTPStatus.OK else f"HTTPError{code}"
 
@@ -259,23 +236,13 @@ class Namespace(OriginalNamespace):
                 decorated_func_or_class = func_or_class
             elif isinstance(func_or_class, type):
                 # pylint: disable=protected-access
-                func_or_class._apply_decorator_to_methods(
-                    response_serializer_decorator
-                )
+                func_or_class._apply_decorator_to_methods(response_serializer_decorator)
                 decorated_func_or_class = func_or_class
             else:
-                decorated_func_or_class = wraps(func_or_class)(
-                    response_serializer_decorator(func_or_class)
-                )
-            api_model = (
-                model
-                if not model or isinstance(model, Model)
-                else self.model(model=model, name=name)
-            )
+                decorated_func_or_class = wraps(func_or_class)(response_serializer_decorator(func_or_class))
+            api_model = model if not model or isinstance(model, Model) else self.model(model=model, name=name)
             if getattr(model, "many", False):
                 api_model = [api_model]
-            return self.doc(responses={code.value: (description, api_model)})(
-                decorated_func_or_class
-            )
+            return self.doc(responses={code.value: (description, api_model)})(decorated_func_or_class)
 
         return decorator

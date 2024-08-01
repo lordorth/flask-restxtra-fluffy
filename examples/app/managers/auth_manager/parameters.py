@@ -5,8 +5,9 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-14 20:23:56
-FilePath: /flask_restx_marshmallow/examples/app/managers/auth_manager/parameters.py
+FilePath: /flask_restxtra_fluffy/examples/app/managers/auth_manager/parameters.py
 """
+
 from datetime import datetime, timedelta
 
 from app.models import Users
@@ -16,7 +17,7 @@ from flask_jwt_extended import create_access_token
 from marshmallow import post_load, validate
 from marshmallow.fields import String
 
-from flask_restx_marshmallow import JSONParameters
+from flask_restxtra_fluffy import JSONParameters
 
 
 class LoginParameters(JSONParameters):
@@ -29,9 +30,7 @@ class LoginParameters(JSONParameters):
         required=True,
         validate=validate.And(
             validate.Length(min=6, max=16),
-            validate.Regexp(
-                r"^[a-zA-Z][a-zA-Z0-9_]{5,15}$", error="account is invalid"
-            ),
+            validate.Regexp(r"^[a-zA-Z][a-zA-Z0-9_]{5,15}$", error="account is invalid"),
         ),
         metadata={"description": "user name"},
     )
@@ -50,9 +49,7 @@ class LoginParameters(JSONParameters):
     @post_load
     def process_login(self, data: "LoginParameters", **_kwargs) -> dict:
         """process login request"""
-        if (
-            user := Users.get_user_by_username(data.username)
-        ) is None or user.password != data.password:
+        if (user := Users.get_user_by_username(data.username)) is None or user.password != data.password:
             return {
                 "code": 1,
                 "message": "user name and password not match",
@@ -63,9 +60,7 @@ class LoginParameters(JSONParameters):
         current_app.logger.info(f"{user.name} login success")
         return {
             "data": {
-                "accessToken": create_access_token(
-                    identity=user, expires_delta=timedelta(days=1)
-                ),
+                "accessToken": create_access_token(identity=user, expires_delta=timedelta(days=1)),
             }
         }
 
@@ -80,9 +75,7 @@ class RegisterParameters(JSONParameters):
         required=True,
         validate=validate.And(
             validate.Length(min=6, max=16),
-            validate.Regexp(
-                r"^[a-zA-Z][a-zA-Z0-9_]{5,15}$", error="account is invalid"
-            ),
+            validate.Regexp(r"^[a-zA-Z][a-zA-Z0-9_]{5,15}$", error="account is invalid"),
         ),
         metadata={"description": "user name"},
     )

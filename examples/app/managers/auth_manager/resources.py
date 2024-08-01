@@ -5,20 +5,19 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-14 20:23:13
-FilePath: /flask_restx_marshmallow/examples/app/managers/auth_manager/resources.py
+FilePath: /flask_restxtra_fluffy/examples/app/managers/auth_manager/resources.py
 """
+
 from http import HTTPStatus
 
 from flask import Response
 
-from flask_restx_marshmallow import Namespace, Resource
+from flask_restxtra_fluffy import Namespace, Resource
 
 from .parameters import LoginParameters, RegisterParameters
 from .schemas import LoginSchema
 
-auth_ns: Namespace = Namespace(
-    "auth", description="interface for user authorization"
-)
+auth_ns: Namespace = Namespace("auth", description="interface for user authorization")
 
 
 @auth_ns.route("/login", endpoint="login")

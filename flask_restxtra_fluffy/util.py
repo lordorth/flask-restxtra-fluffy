@@ -1,12 +1,13 @@
 """
-Description: utils of flask_restx_marshmallow
+Description: utils of flask_restxtra_fluffy
 version: 0.1.1
 Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-02 13:25:40
-FilePath: /flask_restx_marshmallow/flask_restx_marshmallow/util.py
+FilePath: /flask_restxtra_fluffy/flask_restxtra_fluffy/util.py
 """
+
 import importlib
 import re
 from datetime import timedelta
@@ -66,7 +67,7 @@ from marshmallow.fields import (
 from sortedcontainers import SortedDict
 from werkzeug.datastructures import FileStorage
 
-import flask_restx_marshmallow
+import flask_restxtra_fluffy
 
 try:
     json: ModuleType = importlib.import_module("orjson")
@@ -125,24 +126,16 @@ class File(Field):
             else:
                 assert isinstance(mimetypes, (list, tuple, set))
                 assert all(isinstance(mimetype, str) for mimetype in mimetypes)
-                assert {
-                    mimetype.split("/")[0].lower() for mimetype in mimetypes
-                } < self.mimes
+                assert {mimetype.split("/")[0].lower() for mimetype in mimetypes} < self.mimes
                 self.mimetypes = mimetypes
         if size is not None:
             assert size > 0 and isinstance(size, (int, float))
-            size_unit: str = (
-                upper if "B" in (upper := size_unit.upper()) else upper + "B"
-            )
+            size_unit: str = upper if "B" in (upper := size_unit.upper()) else upper + "B"
             assert size_unit in self.size_name
-            self.size: int | float = size * 1024 ** self.size_name.index(
-                size_unit
-            )
+            self.size: int | float = size * 1024 ** self.size_name.index(size_unit)
             self.size_text: str = f"{size:.2f}{size_unit}"
 
-    def _deserialize(
-        self, value: FileStorage, *_args, **_kwargs
-    ) -> FileStorage:
+    def _deserialize(self, value: FileStorage, *_args, **_kwargs) -> FileStorage:
         """protected method for deserializing the value
 
         Args:
@@ -157,11 +150,7 @@ class File(Field):
         if not isinstance(value, FileStorage):
             raise self.make_error("invalid file")
         byte_value: bytes = value.stream.read()
-        file_mime = (
-            res.mime
-            if (res := filetype.guess(byte_value)) is not None
-            else value.mimetype
-        )
+        file_mime = res.mime if (res := filetype.guess(byte_value)) is not None else value.mimetype
         if getattr(self, "mimetypes", None) is not None and not any(
             re.match(
                 re.compile(mimetype, re.IGNORECASE),
@@ -171,10 +160,7 @@ class File(Field):
         ):
             raise self.make_error("invalid_mimetype", mimetype=value.mimetype)
 
-        if (
-            getattr(self, "size", None) is not None
-            and len(value.stream.read()) > self.size
-        ):
+        if getattr(self, "size", None) is not None and len(value.stream.read()) > self.size:
             raise self.make_error("invalid_size", text=self.size_text)
         value.stream = BytesIO(byte_value)
         return value
@@ -278,13 +264,11 @@ def get_default(field: Field) -> str | list[str] | None:
         and not isinstance(default, type(missing))
     ):
         return default
-    if (
-        default := getattr(field.metadata, "default", None)
-    ) is not None and not isinstance(default, type(missing)):
+    if (default := getattr(field.metadata, "default", None)) is not None and not isinstance(default, type(missing)):
         return default
-    if (
-        default := getattr(field.metadata, "load_default", None)
-    ) is not None and not isinstance(default, type(missing)):
+    if (default := getattr(field.metadata, "load_default", None)) is not None and not isinstance(
+        default, type(missing)
+    ):
         return default
     return None
 
@@ -304,9 +288,9 @@ def get_description(field: Field) -> str | None:
         and not isinstance(description, type(missing))
     ):
         return description
-    if (
-        description := getattr(field.metadata, "description", None)
-    ) is not None and not isinstance(description, type(missing)):
+    if (description := getattr(field.metadata, "description", None)) is not None and not isinstance(
+        description, type(missing)
+    ):
         return description
     return None
 
@@ -333,9 +317,7 @@ def permission_required(
                 current_user = get_current_user()
                 if any(
                     re.match(route, route_name) or route.startswith(route_name)
-                    for route_name in getattr(
-                        current_user, user_authed_routes_attr_name
-                    )
+                    for route_name in getattr(current_user, user_authed_routes_attr_name)
                 ):
                     return current_app.ensure_sync(func)(*args, **kwargs)
                 res: Response = jsonify(
@@ -356,7 +338,7 @@ def permission_required(
     return wrapper
 
 
-def ui_for(api: "flask_restx_marshmallow.Api") -> str | None:
+def ui_for(api: "flask_restxtra_fluffy.Api") -> str | None:
     """Render a SwaggerUI for a given API
 
     Args:
@@ -373,39 +355,28 @@ def ui_for(api: "flask_restx_marshmallow.Api") -> str | None:
             base_url=base,
         )
     rdb: redis.Redis | dict = (
-        redis.StrictRedis.from_url(
-            current_app.config["CACHE_REDIS_URL"], decode_responses=True
-        )
+        redis.StrictRedis.from_url(current_app.config["CACHE_REDIS_URL"], decode_responses=True)
         if current_app.config.get("CACHE_REDIS_URL") is not None
         else {}
     )
     match current_app.config.get("SWAGGER_UI_CDN"):
         case "cdn.baomitu.com":
             if (
-                current_version := current_app.config.get("SWAGGER_UI_VERSION")
-                or rdb.get("swagger-ui-version")
+                current_version := current_app.config.get("SWAGGER_UI_VERSION") or rdb.get("swagger-ui-version")
             ) is not None:
                 return render_template(
                     "index.html",
                     title=api.title,
                     specs_url=api.specs_url,
-                    base_url="//lib.baomitu.com/swagger-ui/"
-                    + current_app.config["SWAGGER_UI_VERSION"],
+                    base_url="//lib.baomitu.com/swagger-ui/" + current_app.config["SWAGGER_UI_VERSION"],
                 )
             try:
-                if (
-                    req := requests.get(
-                        "https://cdn.baomitu.com/swagger-ui", timeout=5
-                    )
-                ) and req.status_code == 200:
+                if (req := requests.get("https://cdn.baomitu.com/swagger-ui", timeout=5)) and req.status_code == 200:
                     html: BeautifulSoup = BeautifulSoup(req.text, "html.parser")
                     versions: list[tuple[int]] = sorted(
                         tuple(map(int, version_string.split(".")))
-                        for version in html.find_all(
-                            "h3", class_="version-name version-close"
-                        )
-                        if (version_string := version.attrs["data-id"])
-                        and re.match(r"^\d+\.\d+\.\d+$", version_string)
+                        for version in html.find_all("h3", class_="version-name version-close")
+                        if (version_string := version.attrs["data-id"]) and re.match(r"^\d+\.\d+\.\d+$", version_string)
                     )
                     while current_version := ".".join(map(str, versions.pop())):
                         if (
@@ -421,10 +392,7 @@ def ui_for(api: "flask_restx_marshmallow.Api") -> str | None:
                             and res.text[:3] != "404"
                             # 360 CDN return status code 200 but return 404 page
                         ):
-                            if (
-                                current_app.config.get("CACHE_REDIS_URL")
-                                is not None
-                            ):
+                            if current_app.config.get("CACHE_REDIS_URL") is not None:
                                 rdb.set(
                                     "swagger-ui-version",
                                     current_version,
@@ -434,8 +402,7 @@ def ui_for(api: "flask_restx_marshmallow.Api") -> str | None:
                                 "index.html",
                                 title=api.title,
                                 specs_url=api.specs_url,
-                                base_url="//lib.baomitu.com/swagger-ui/"
-                                + current_version,
+                                base_url="//lib.baomitu.com/swagger-ui/" + current_version,
                             )
             except (
                 requests.exceptions.ConnectionError,
@@ -444,26 +411,18 @@ def ui_for(api: "flask_restx_marshmallow.Api") -> str | None:
                 current_app.logger.error("use local swagger")
         case "cdn.bootcdn.net":
             if (
-                current_version := current_app.config.get("SWAGGER_UI_VERSION")
-                or rdb.get("swagger-ui-version")
+                current_version := current_app.config.get("SWAGGER_UI_VERSION") or rdb.get("swagger-ui-version")
             ) is not None:
                 return render_template(
                     "index.html",
                     title=api.title,
                     specs_url=api.specs_url,
-                    base_url="https://cdn.bootcdn.net/ajax/libs/swagger-ui/"
-                    + current_app.config["SWAGGER_UI_VERSION"],
+                    base_url="https://cdn.bootcdn.net/ajax/libs/swagger-ui/" + current_app.config["SWAGGER_UI_VERSION"],
                 )
             try:
-                if (
-                    req := requests.get(
-                        "https://www.bootcdn.cn/swagger-ui", timeout=5
-                    )
-                ) and req.status_code == 200:
+                if (req := requests.get("https://www.bootcdn.cn/swagger-ui", timeout=5)) and req.status_code == 200:
                     html: BeautifulSoup = BeautifulSoup(req.text, "html.parser")
-                    ul_tag: Tag = html.find(
-                        "ul", class_="dropdown-menu dmenuver"
-                    )
+                    ul_tag: Tag = html.find("ul", class_="dropdown-menu dmenuver")
                     versions: list[tuple[int]] = sorted(
                         tuple(map(int, version_string.split(".")))
                         for version in ul_tag.find_all("a")
@@ -479,10 +438,7 @@ def ui_for(api: "flask_restx_marshmallow.Api") -> str | None:
                                 timeout=1,
                             )
                         ) and res.status_code == 200:
-                            if (
-                                current_app.config.get("CACHE_REDIS_URL")
-                                is not None
-                            ):
+                            if current_app.config.get("CACHE_REDIS_URL") is not None:
                                 rdb.set(
                                     "swagger-ui-version",
                                     current_version,
@@ -492,8 +448,7 @@ def ui_for(api: "flask_restx_marshmallow.Api") -> str | None:
                                 "index.html",
                                 title=api.title,
                                 specs_url=api.specs_url,
-                                base_url="https://cdn.bootcdn.net/ajax/libs/swagger-ui/"
-                                + current_version,
+                                base_url="https://cdn.bootcdn.net/ajax/libs/swagger-ui/" + current_version,
                             )
             except (
                 requests.exceptions.ConnectionError,
@@ -502,8 +457,7 @@ def ui_for(api: "flask_restx_marshmallow.Api") -> str | None:
                 current_app.logger.error("use local swagger")
         case "cdnjs.com":
             if (
-                current_version := current_app.config.get("SWAGGER_UI_VERSION")
-                or rdb.get("swagger-ui-version")
+                current_version := current_app.config.get("SWAGGER_UI_VERSION") or rdb.get("swagger-ui-version")
             ) is not None:
                 return render_template(
                     "index.html",
@@ -513,14 +467,8 @@ def ui_for(api: "flask_restx_marshmallow.Api") -> str | None:
                     + current_app.config["SWAGGER_UI_VERSION"],
                 )
             try:
-                if (
-                    req := requests.get(
-                        "https://cdn.baomitu.com/swagger-ui", timeout=5
-                    )
-                ) and req.status_code == 200:
-                    current_version = re.findall(
-                        r'\("swagger-ui","(.*)",true,false', req.text
-                    )[0]
+                if (req := requests.get("https://cdn.baomitu.com/swagger-ui", timeout=5)) and req.status_code == 200:
+                    current_version = re.findall(r'\("swagger-ui","(.*)",true,false', req.text)[0]
                     if current_app.config.get("CACHE_REDIS_URL") is not None:
                         rdb.set(
                             "swagger-ui-version",
@@ -531,8 +479,7 @@ def ui_for(api: "flask_restx_marshmallow.Api") -> str | None:
                             "index.html",
                             title=api.title,
                             specs_url=api.specs_url,
-                            base_url="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/"
-                            + current_version,
+                            base_url="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/" + current_version,
                         )
             except (
                 requests.exceptions.ConnectionError,
@@ -549,11 +496,11 @@ def ui_for(api: "flask_restx_marshmallow.Api") -> str | None:
 
 
 spec: APISpec = APISpec(
-    title="flask_restx_marshmallow",
+    title="flask_restxtra_fluffy",
     version="0.1.1",
     openapi_version="3.0.2",
     plugins=[MarshmallowPlugin(schema_name_resolver=resolver)],
-    info={"description": "flask_restx_marshmallow backend api"},
+    info={"description": "flask_restxtra_fluffy backend api"},
 )
 converter: MarshmallowPlugin.Converter = spec.plugins[0].converter
 apidoc: Apidoc = Apidoc(

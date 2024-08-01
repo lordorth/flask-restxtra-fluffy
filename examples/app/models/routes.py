@@ -5,8 +5,9 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-14 19:23:03
-FilePath: /flask_restx_marshmallow/examples/app/models/routes.py
+FilePath: /flask_restxtra_fluffy/examples/app/models/routes.py
 """
+
 from datetime import datetime
 from uuid import UUID, uuid4
 
@@ -17,7 +18,7 @@ from sqlalchemy import Column, DateTime, Integer, String, exc, func
 from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy_utils import UUIDType, aggregated, generic_repr
 
-from flask_restx_marshmallow import permission_required
+from flask_restxtra_fluffy import permission_required
 
 
 @generic_repr
@@ -34,21 +35,11 @@ class Routes(db.Model):
         nullable=False,
         comment="primary key for the table",
     )
-    created_on: Mapped[datetime] = Column(
-        DateTime, nullable=False, comment="created datetime"
-    )
-    description: Mapped[str] = Column(
-        String(255), nullable=False, comment="route description"
-    )
-    last_update: Mapped[datetime] = Column(
-        DateTime, nullable=False, comment="last update datetime"
-    )
-    name: Mapped[str] = Column(
-        String(50), unique=True, nullable=False, comment="route name"
-    )
-    roles: Mapped[list[models.Roles]] = relationship(
-        "Roles", secondary="role2route", back_populates="routes"
-    )
+    created_on: Mapped[datetime] = Column(DateTime, nullable=False, comment="created datetime")
+    description: Mapped[str] = Column(String(255), nullable=False, comment="route description")
+    last_update: Mapped[datetime] = Column(DateTime, nullable=False, comment="last update datetime")
+    name: Mapped[str] = Column(String(50), unique=True, nullable=False, comment="route name")
+    roles: Mapped[list[models.Roles]] = relationship("Roles", secondary="role2route", back_populates="routes")
 
     @aggregated(
         "roles.users",
@@ -56,9 +47,7 @@ class Routes(db.Model):
     )
     def user_count(self):
         """valid user count"""
-        return func.count(  # pylint: disable=not-callable
-            models.Users.valid is True
-        )
+        return func.count(models.Users.valid is True)  # pylint: disable=not-callable
 
     @classmethod
     def add(
@@ -136,9 +125,7 @@ class Routes(db.Model):
             page (int, optional): current page. Defaults to 1.
             per_page (int, optional): page size. Defaults to 10.
         """
-        query = cls.query.filter(
-            cls.name.notlike("/system%"), cls.name.contains(keyword)
-        )
+        query = cls.query.filter(cls.name.notlike("/system%"), cls.name.contains(keyword))
         return {
             "routes": query.order_by(
                 getattr(cls, order_prop, cls.created_on).desc()

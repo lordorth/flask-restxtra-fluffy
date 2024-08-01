@@ -1,12 +1,13 @@
 """
-Description: schemas of flask_restx_marshmallow
+Description: schemas of flask_restxtra_fluffy
 version: 0.1.1
 Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 14:16:11
-FilePath: /flask_restx_marshmallow/flask_restx_marshmallow/schema.py
+FilePath: /flask_restxtra_fluffy/flask_restxtra_fluffy/schema.py
 """
+
 import importlib
 from types import ModuleType
 from typing import Optional
@@ -78,12 +79,8 @@ class StandardSchema(Schema):
     msg: Standard schema
     """
 
-    code: int = fields.Integer(
-        required=True, dump_default=0, metadata={"description": "status code"}
-    )
-    message: str = fields.String(
-        required=True, dump_default="ok", metadata={"description": "message"}
-    )
+    code: int = fields.Integer(required=True, dump_default=0, metadata={"description": "status code"})
+    message: str = fields.String(required=True, dump_default="ok", metadata={"description": "message"})
     success: bool = fields.Boolean(
         required=True,
         dump_default=True,
@@ -124,9 +121,7 @@ class ModelConverter(OriginalModelConverter):
         if hasattr(column, "nullable"):
             if column.nullable:
                 kwargs["allow_none"] = True
-            kwargs["required"] = not column.nullable and not _has_default(
-                column
-            )
+            kwargs["required"] = not column.nullable and not _has_default(column)
         if (getattr(column, "default", None)) is not None:
             _set_meta_kwarg(kwargs, "default", column.default.arg)
 
@@ -148,17 +143,15 @@ class ModelConverter(OriginalModelConverter):
             self._add_relationship_kwargs(kwargs, prop)
         if (doc := getattr(prop, "doc", None)) is not None:
             _set_meta_kwarg(kwargs, "description", doc)
-        if (column_type := getattr(prop, "type", None)) and isinstance(
-            column_type, ScalarListType
-        ):
+        if (column_type := getattr(prop, "type", None)) and isinstance(column_type, ScalarListType):
             kwargs["cls_or_instance"] = (
                 fields.String()
                 if column_type.coerce_func == str
-                else fields.Integer()
-                if column_type.coerce_func == int
-                else fields.Float()
-                if column_type.coerce_func == float
-                else fields.Field()
+                else (
+                    fields.Integer()
+                    if column_type.coerce_func == int
+                    else fields.Float() if column_type.coerce_func == float else fields.Field()
+                )
             )
         return kwargs
 
@@ -215,9 +208,7 @@ class DefaultHTTPErrorSchema(Schema):
     msg: Default HTTP Error Schema
     """
 
-    code: int = fields.Integer(
-        required=True, dump_default=500, metadata={"description": "status code"}
-    )
+    code: int = fields.Integer(required=True, dump_default=500, metadata={"description": "status code"})
     message: str = fields.String(
         required=True,
         dump_default=API_DEFAULT_HTTP_CODE_MESSAGES[500],
@@ -232,9 +223,7 @@ class DefaultHTTPErrorSchema(Schema):
     def __init__(self, http_code: int, **kwargs) -> None:
         super().__init__(**kwargs)
         self.dump_fields["code"].dump_default = http_code
-        self.dump_fields[
-            "message"
-        ].dump_default = API_DEFAULT_HTTP_CODE_MESSAGES[http_code]
+        self.dump_fields["message"].dump_default = API_DEFAULT_HTTP_CODE_MESSAGES[http_code]
 
 
 class Model(OriginalModel):

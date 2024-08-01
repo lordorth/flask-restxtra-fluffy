@@ -1,12 +1,13 @@
 """
-Description: parameters of flask_restx_marshmallow
+Description: parameters of flask_restxtra_fluffy
 version: 0.1.1
 Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 14:15:27
-FilePath: /flask_restx_marshmallow/flask_restx_marshmallow/parameter.py
+FilePath: /flask_restxtra_fluffy/flask_restxtra_fluffy/parameter.py
 """
+
 import importlib
 from dataclasses import dataclass
 from types import ModuleType
@@ -32,18 +33,14 @@ class Parameters(Schema):
 
         unknown: str = EXCLUDE
 
-    def __init__(
-        self, *, add_jwt: bool = False, location: str, **kwargs
-    ) -> None:
+    def __init__(self, *, add_jwt: bool = False, location: str, **kwargs) -> None:
         super().__init__(**kwargs)
         for field in self.fields.values():
             field.load_only = True
             if not field.metadata.get("location"):
                 field.metadata["location"] = location
         if add_jwt:
-            self.fields["jwt"] = fields.String(
-                metadata={"description": "JWT", "location": "query"}
-            )
+            self.fields["jwt"] = fields.String(metadata={"description": "JWT", "location": "query"})
         try:
             json: ModuleType = importlib.import_module("orjson")
         except ModuleNotFoundError:

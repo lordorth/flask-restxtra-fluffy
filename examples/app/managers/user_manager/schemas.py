@@ -5,8 +5,9 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 14:30:53
-FilePath: /flask_restx_marshmallow/examples/app/managers/user_manager/schemas.py
+FilePath: /flask_restxtra_fluffy/examples/app/managers/user_manager/schemas.py
 """
+
 import uuid
 from dataclasses import dataclass
 from datetime import datetime
@@ -22,7 +23,7 @@ from marshmallow.fields import (
     String,
 )
 
-from flask_restx_marshmallow import SQLAlchemySchema, StandardSchema
+from flask_restxtra_fluffy import SQLAlchemySchema, StandardSchema
 
 from ..role_manager.schemas import RolesProfileSchema
 
@@ -42,23 +43,13 @@ class UsersProfileSchema(SQLAlchemySchema):
 
         model = Users
 
-    created_on: datetime = DateTime(
-        metadata={"description": "created datetime"}
-    )
+    created_on: datetime = DateTime(metadata={"description": "created datetime"})
     description: str = String(metadata={"description": "user description"})
-    last_login: datetime = DateTime(
-        metadata={"description": "last login datetime"}
-    )
+    last_login: datetime = DateTime(metadata={"description": "last login datetime"})
     name: str = String(metadata={"description": "user name"})
-    roles: list[Roles] = List(
-        Nested(RolesProfileSchema), metadata={"description": "user roles"}
-    )
-    routes: list[str] = List(
-        String(metadata={"description": "authorized routes"})
-    )
-    user_id: uuid.UUID = UUID(
-        attribute="id", metadata={"description": "primary key"}
-    )
+    roles: list[Roles] = List(Nested(RolesProfileSchema), metadata={"description": "user roles"})
+    routes: list[str] = List(String(metadata={"description": "authorized routes"}))
+    user_id: uuid.UUID = UUID(attribute="id", metadata={"description": "primary key"})
     valid: bool = Boolean(metadata={"description": "whether the user is valid"})
 
 

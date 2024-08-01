@@ -5,11 +5,12 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-14 20:22:14
-FilePath: /flask_restx_marshmallow/examples/app/managers/auth_manager/schemas.py
+FilePath: /flask_restxtra_fluffy/examples/app/managers/auth_manager/schemas.py
 """
+
 from marshmallow.fields import Nested, String
 
-from flask_restx_marshmallow import StandardSchema
+from flask_restxtra_fluffy import StandardSchema
 
 
 class LoginSchema(StandardSchema):

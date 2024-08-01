@@ -5,8 +5,9 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 13:52:14
-FilePath: /flask_restx_marshmallow/examples/app/managers/role_manager/schemas.py
+FilePath: /flask_restxtra_fluffy/examples/app/managers/role_manager/schemas.py
 """
+
 import uuid
 from dataclasses import dataclass
 from datetime import datetime
@@ -22,7 +23,7 @@ from marshmallow.fields import (
     String,
 )
 
-from flask_restx_marshmallow import SQLAlchemySchema, StandardSchema
+from flask_restxtra_fluffy import SQLAlchemySchema, StandardSchema
 
 from ..route_manager.schemas import RoutesProfileSchema
 
@@ -42,17 +43,11 @@ class RolesProfileSchema(SQLAlchemySchema):
 
         model = Roles
 
-    created_on: datetime = DateTime(
-        metadata={"description": "created datetime"}
-    )
+    created_on: datetime = DateTime(metadata={"description": "created datetime"})
     description: str = String(metadata={"description": "role description"})
-    last_update: datetime = DateTime(
-        metadata={"description": "last update datetime"}
-    )
+    last_update: datetime = DateTime(metadata={"description": "last update datetime"})
     name: str = String(metadata={"description": "role name"})
-    role_id: uuid.UUID = UUID(
-        attribute="id", metadata={"description": "primary key"}
-    )
+    role_id: uuid.UUID = UUID(attribute="id", metadata={"description": "primary key"})
     routes: list[Routes] = List(
         Nested(RoutesProfileSchema),
         metadata={"description": "authorized routes"},

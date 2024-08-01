@@ -5,8 +5,9 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-07-11 13:13:08
-FilePath: /flask_restx_marshmallow/examples/app/configs.py
+FilePath: /flask_restxtra_fluffy/examples/app/configs.py
 """
+
 # pylint: disable=invalid-name
 import os
 from dataclasses import dataclass
@@ -74,6 +75,4 @@ class ProductionConfig(BaseConfig):
     JWT_BLACKLIST_ENABLED: bool = True
     JWT_BLACKLIST_TOKEN_CHECKS: Iterable[str] = ("access", "refresh")
     SECRET_KEY: str = "wRgTS1DZsBwYZJCRS3P0lpl9QI8zvjzzdpX2P0rutzo"
-    SQLALCHEMY_DATABASE_URI: str = os.path.join(
-        os.environ["SQLALCHEMY_DATABASE_URI"], "example"
-    )
+    SQLALCHEMY_DATABASE_URI: str = os.path.join(os.environ["SQLALCHEMY_DATABASE_URI"], "example")

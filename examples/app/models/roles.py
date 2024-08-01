@@ -5,8 +5,9 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-14 15:43:35
-FilePath: /flask_restx_marshmallow/examples/app/models/roles.py
+FilePath: /flask_restxtra_fluffy/examples/app/models/roles.py
 """
+
 from datetime import datetime
 from typing import Iterable
 from uuid import UUID, uuid4
@@ -19,7 +20,7 @@ from sqlalchemy import Boolean, Column, DateTime, Integer, String, exc, func
 from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy_utils import UUIDType, aggregated, generic_repr
 
-from flask_restx_marshmallow import permission_required
+from flask_restxtra_fluffy import permission_required
 
 
 @generic_repr
@@ -36,24 +37,12 @@ class Roles(db.Model):
         nullable=False,
         comment="primary key for the table",
     )
-    created_on: Mapped[datetime] = Column(
-        DateTime, nullable=False, comment="created datetime"
-    )
-    description: Mapped[str] = Column(
-        String(255), nullable=False, comment="role description"
-    )
-    last_update: Mapped[datetime] = Column(
-        DateTime, nullable=False, comment="last update datetime"
-    )
-    name: Mapped[str] = Column(
-        String(50), unique=True, nullable=False, comment="role name"
-    )
-    routes: Mapped[list["models.Routes"]] = relationship(
-        "Routes", secondary="role2route", back_populates="roles"
-    )
-    users: Mapped[list["models.Users"]] = relationship(
-        "Users", secondary="user2role", back_populates="roles"
-    )
+    created_on: Mapped[datetime] = Column(DateTime, nullable=False, comment="created datetime")
+    description: Mapped[str] = Column(String(255), nullable=False, comment="role description")
+    last_update: Mapped[datetime] = Column(DateTime, nullable=False, comment="last update datetime")
+    name: Mapped[str] = Column(String(50), unique=True, nullable=False, comment="role name")
+    routes: Mapped[list["models.Routes"]] = relationship("Routes", secondary="role2route", back_populates="roles")
+    users: Mapped[list["models.Users"]] = relationship("Users", secondary="user2role", back_populates="roles")
     valid: Mapped[bool] = Column(
         Boolean,
         nullable=False,
@@ -67,9 +56,7 @@ class Roles(db.Model):
     )
     def user_count(self):
         """valid user count"""
-        return func.count(  # pylint: disable=not-callable
-            models.Users.valid is True
-        )
+        return func.count(models.Users.valid is True)  # pylint: disable=not-callable
 
     @classmethod
     def add(
@@ -96,13 +83,7 @@ class Roles(db.Model):
                     last_update=datetime.now(),
                     name=name,
                     routes=[
-                        data
-                        for route_name in routes
-                        if (
-                            data := models.Routes.get_route_by_route_name(
-                                route_name
-                            )
-                        )
+                        data for route_name in routes if (data := models.Routes.get_route_by_route_name(route_name))
                     ],
                     valid=True,
                 )
@@ -128,10 +109,7 @@ class Roles(db.Model):
             db.session.commit()
             return {"success": True, "message": "delete role successfully"}
         current_user.ban()
-        current_app.logger.error(
-            f"{current_user.name} is trying to delete role (id="
-            f"{role_id}) that does not exist"
-        )
+        current_app.logger.error(f"{current_user.name} is trying to delete role (id=" f"{role_id}) that does not exist")
         return {"success": False, "message": "role does not exist"}
 
     @classmethod
@@ -150,8 +128,7 @@ class Roles(db.Model):
             if routes := [
                 data
                 for route_name in data.pop("routes", [])
-                if "/system" not in route_name
-                and (data := models.Routes.get_route_by_route_name(route_name))
+                if "/system" not in route_name and (data := models.Routes.get_route_by_route_name(route_name))
             ]:
                 role.routes = routes
             data.update({"last_update": datetime.now()})
@@ -162,10 +139,7 @@ class Roles(db.Model):
                 "message": "update role info successfully",
             }
         current_user.ban()
-        current_app.logger.error(
-            f"{current_user.name} is trying to update role (id="
-            f"{role_id}) that does not exist"
-        )
+        current_app.logger.error(f"{current_user.name} is trying to update role (id=" f"{role_id}) that does not exist")
         return {"success": False, "message": "role does not exist"}
 
     @classmethod
@@ -215,9 +189,7 @@ class Roles(db.Model):
             page (int, optional): current page. Defaults to 1.
             per_page (int, optional): page size. Defaults to 10.
         """
-        query = cls.query.filter(
-            cls.name != "admin", cls.name.contains(keyword)
-        )
+        query = cls.query.filter(cls.name != "admin", cls.name.contains(keyword))
         return {
             "roles": query.order_by(
                 getattr(cls, order_prop, cls.created_on).desc()

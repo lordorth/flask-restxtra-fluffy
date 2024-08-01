@@ -5,8 +5,9 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 14:18:48
-FilePath: /flask_restx_marshmallow/examples/app/managers/user_manager/parameters.py
+FilePath: /flask_restxtra_fluffy/examples/app/managers/user_manager/parameters.py
 """
+
 import uuid
 from typing import NoReturn, Optional
 
@@ -14,7 +15,7 @@ from app.models import Roles, Users
 from marshmallow import ValidationError, post_load, validate, validates_schema
 from marshmallow.fields import UUID, Boolean, Integer, List, String
 
-from flask_restx_marshmallow import JSONParameters, QueryParameters
+from flask_restxtra_fluffy import JSONParameters, QueryParameters
 
 from .schemas import UsersProfileSchema
 
@@ -32,9 +33,7 @@ class GetUsersInfoParameters(QueryParameters):
         load_default="desc",
     )
     order_prop: str = String(
-        validate=validate.OneOf(
-            choices=set(UsersProfileSchema().fields.keys())
-        ),
+        validate=validate.OneOf(choices=set(UsersProfileSchema().fields.keys())),
         load_default="created_on",
         metadata={"description": "order property"},
     )
@@ -50,9 +49,7 @@ class GetUsersInfoParameters(QueryParameters):
     )
 
     @post_load
-    def process_get_users_info(
-        self, data: "GetUsersInfoParameters", **_kwargs
-    ) -> dict:
+    def process_get_users_info(self, data: "GetUsersInfoParameters", **_kwargs) -> dict:
         """query users info"""
         return {
             "data": Users.get_all_users(
@@ -82,18 +79,11 @@ class UpdateUserParameters(JSONParameters):
     valid: bool = Boolean(metadata={"description": "whether the user is valid"})
 
     @validates_schema
-    def validate(
-        self, data: "UpdateUserParameters", **_kwargs
-    ) -> Optional[NoReturn]:
+    def validate(self, data: "UpdateUserParameters", **_kwargs) -> Optional[NoReturn]:
         """validate schema"""
-        if all(
-            value is None for key, value in data.items() if key != "user_id"
-        ):
+        if all(value is None for key, value in data.items() if key != "user_id"):
             raise ValidationError("At least one field must be provided")
-        if (
-            data.roles is not None
-            and not set(data.roles) < Roles.get_all_names()
-        ):
+        if data.roles is not None and not set(data.roles) < Roles.get_all_names():
             raise ValidationError("role names are not valid")
 
     @post_load
