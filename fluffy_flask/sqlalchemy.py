@@ -1,11 +1,11 @@
 """
-Description: patched salalchemy of fluffy-flask
+Description: patched salalchemy of fluffy_flask
 version: 0.1.1
 Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 14:16:40
-FilePath: /fluffy-flask/fluffy-flask/sqlalchemy.py
+FilePath: /fluffy_flask/fluffy_flask/sqlalchemy.py
 """
 
 from typing import Optional

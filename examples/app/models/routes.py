@@ -5,7 +5,7 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-14 19:23:03
-FilePath: /fluffy-flask/examples/app/models/routes.py
+FilePath: /fluffy_flask/examples/app/models/routes.py
 """
 
 from datetime import datetime
@@ -18,7 +18,7 @@ from sqlalchemy import Column, DateTime, Integer, String, exc, func
 from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy_utils import UUIDType, aggregated, generic_repr
 
-from fluffy-flask import permission_required
+from fluffy_flask import permission_required
 
 
 @generic_repr

@@ -1,11 +1,11 @@
 """
-Description: fluffy-flask
+Description: fluffy_flask
 version: 0.1.1
 Author: 1746104160
 Date: 2023-07-11 12:39:16
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-07-11 12:48:43
-FilePath: /fluffy-flask/tests/conftest.py
+FilePath: /fluffy_flask/tests/conftest.py
 """
 
 import pytest

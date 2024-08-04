@@ -5,7 +5,7 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 14:18:48
-FilePath: /fluffy-flask/examples/app/managers/user_manager/parameters.py
+FilePath: /fluffy_flask/examples/app/managers/user_manager/parameters.py
 """
 
 import uuid
@@ -15,7 +15,7 @@ from app.models import Roles, Users
 from marshmallow import ValidationError, post_load, validate, validates_schema
 from marshmallow.fields import UUID, Boolean, Integer, List, String
 
-from fluffy-flask import JSONParameters, QueryParameters
+from fluffy_flask import JSONParameters, QueryParameters
 
 from .schemas import UsersProfileSchema
 

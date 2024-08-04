@@ -1,11 +1,11 @@
 """
-Description: schemas of fluffy-flask
+Description: schemas of fluffy_flask
 version: 0.1.1
 Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 14:16:11
-FilePath: /fluffy-flask/fluffy-flask/schema.py
+FilePath: /fluffy_flask/fluffy_flask/schema.py
 """
 
 import importlib

@@ -1,11 +1,11 @@
 <!--
- * @Description: README for fluffy-flask
+ * @Description: README for fluffy_flask
  * @version: 0.1.1
  * @Author: 1746104160
  * @Date: 2023-06-02 13:05:58
  * @LastEditors: 1746104160 shaojiahong2001@outlook.com
  * @LastEditTime: 2023-06-16 18:04:55
- * @FilePath: /fluffy-flask/README.md
+ * @FilePath: /fluffy_flask/README.md
 -->
 # Flask-restXtra-fluffy
 

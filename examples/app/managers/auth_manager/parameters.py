@@ -5,7 +5,7 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-14 20:23:56
-FilePath: /fluffy-flask/examples/app/managers/auth_manager/parameters.py
+FilePath: /fluffy_flask/examples/app/managers/auth_manager/parameters.py
 """
 
 from datetime import datetime, timedelta
@@ -17,7 +17,7 @@ from flask_jwt_extended import create_access_token
 from marshmallow import post_load, validate
 from marshmallow.fields import String
 
-from fluffy-flask import JSONParameters
+from fluffy_flask import JSONParameters
 
 
 class LoginParameters(JSONParameters):

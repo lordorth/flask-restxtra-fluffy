@@ -1,11 +1,11 @@
 """
-Description: patched namespace of fluffy-flask
+Description: patched namespace of fluffy_flask
 version: 0.1.1
 Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-04 21:38:50
-FilePath: /fluffy-flask/fluffy-flask/namespace.py
+FilePath: /fluffy_flask/fluffy_flask/namespace.py
 """
 
 from functools import wraps

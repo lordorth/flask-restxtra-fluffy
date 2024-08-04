@@ -5,7 +5,7 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 14:07:42
-FilePath: /fluffy-flask/examples/app/managers/route_manager/resources.py
+FilePath: /fluffy_flask/examples/app/managers/route_manager/resources.py
 """
 
 from http import HTTPStatus
@@ -13,7 +13,7 @@ from http import HTTPStatus
 from app.config import Config
 from requests import Response
 
-from fluffy-flask import Namespace, Resource, permission_required
+from fluffy_flask import Namespace, Resource, permission_required
 
 from .parameters import GetRoutesInfoParameters
 from .schemas import RoutesInfoSchema

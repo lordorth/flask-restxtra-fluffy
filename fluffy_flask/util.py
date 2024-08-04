@@ -1,11 +1,11 @@
 """
-Description: utils of fluffy-flask
+Description: utils of fluffy_flask
 version: 0.1.1
 Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-02 13:25:40
-FilePath: /fluffy-flask/fluffy-flask/util.py
+FilePath: /fluffy_flask/fluffy_flask/util.py
 """
 
 import importlib
@@ -338,7 +338,7 @@ def permission_required(
     return wrapper
 
 
-def ui_for(api: "fluffy-flask.Api") -> str | None:
+def ui_for(api: "fluffy_flask.Api") -> str | None:
     """Render a SwaggerUI for a given API
 
     Args:
@@ -496,11 +496,11 @@ def ui_for(api: "fluffy-flask.Api") -> str | None:
 
 
 spec: APISpec = APISpec(
-    title="fluffy-flask",
+    title="fluffy_flask",
     version="0.1.1",
     openapi_version="3.0.2",
     plugins=[MarshmallowPlugin(schema_name_resolver=resolver)],
-    info={"description": "fluffy-flask backend api"},
+    info={"description": "fluffy_flask backend api"},
 )
 converter: MarshmallowPlugin.Converter = spec.plugins[0].converter
 apidoc: Apidoc = Apidoc(

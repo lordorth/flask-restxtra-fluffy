@@ -5,7 +5,7 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-07-11 13:10:31
-FilePath: /fluffy-flask/examples/app/utils.py
+FilePath: /fluffy_flask/examples/app/utils.py
 """
 
 import getpass
@@ -15,7 +15,7 @@ import toml
 from flask import Blueprint
 from flask_caching import Cache
 
-from fluffy-flask import Api, SQLAlchemy
+from fluffy_flask import Api, SQLAlchemy
 
 PROJECT_CONFIG: dict = (
     poetry

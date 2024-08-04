@@ -1,6 +1,6 @@
 [tool.poetry]
 #package-mode = false
-name = "fluffy-flask"
+name = "fluffy_flask"
 version = "0.0.0"
 description = "A successful practice combining flask_restx with marshmallow"
 authors = ["Alexander Orth <alexander.orth@rub.de>"]

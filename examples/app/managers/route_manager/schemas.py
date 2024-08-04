@@ -5,7 +5,7 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 14:09:09
-FilePath: /fluffy-flask/examples/app/managers/route_manager/schemas.py
+FilePath: /fluffy_flask/examples/app/managers/route_manager/schemas.py
 """
 
 import uuid
@@ -15,7 +15,7 @@ from datetime import datetime
 from app.models import Routes
 from marshmallow.fields import UUID, DateTime, Integer, List, Nested, String
 
-from fluffy-flask import SQLAlchemySchema, StandardSchema
+from fluffy_flask import SQLAlchemySchema, StandardSchema
 
 
 class RoutesProfileSchema(SQLAlchemySchema):

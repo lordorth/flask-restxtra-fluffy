@@ -5,7 +5,7 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 14:04:28
-FilePath: /fluffy-flask/examples/app/managers/route_manager/parameters.py
+FilePath: /fluffy_flask/examples/app/managers/route_manager/parameters.py
 """
 
 from app.managers.route_manager.schemas import RoutesProfileSchema
@@ -13,7 +13,7 @@ from app.models import Routes
 from marshmallow import post_load, validate
 from marshmallow.fields import Integer, String
 
-from fluffy-flask import QueryParameters
+from fluffy_flask import QueryParameters
 
 
 class GetRoutesInfoParameters(QueryParameters):

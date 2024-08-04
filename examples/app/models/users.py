@@ -5,7 +5,7 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 13:16:55
-FilePath: /fluffy-flask/examples/app/models/users.py
+FilePath: /fluffy_flask/examples/app/models/users.py
 """
 
 from datetime import datetime
@@ -27,7 +27,7 @@ from sqlalchemy_utils import (
     observes,
 )
 
-from fluffy-flask import permission_required
+from fluffy_flask import permission_required
 
 
 @generic_repr
