@@ -5,7 +5,7 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 14:18:48
-FilePath: /flask_restxtra_fluffy/examples/app/managers/user_manager/parameters.py
+FilePath: /fluffy-flask/examples/app/managers/user_manager/parameters.py
 """
 
 import uuid

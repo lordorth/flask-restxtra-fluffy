@@ -1,11 +1,11 @@
 """
-Description: utils of flask_restxtra_fluffy
+Description: utils of fluffy-flask
 version: 0.1.1
 Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-02 13:25:40
-FilePath: /flask_restxtra_fluffy/flask_restxtra_fluffy/util.py
+FilePath: /fluffy-flask/fluffy-flask/util.py
 """
 
 import importlib
@@ -496,11 +496,11 @@ def ui_for(api: "flask_restxtra_fluffy.Api") -> str | None:
 
 
 spec: APISpec = APISpec(
-    title="flask_restxtra_fluffy",
+    title="fluffy-flask",
     version="0.1.1",
     openapi_version="3.0.2",
     plugins=[MarshmallowPlugin(schema_name_resolver=resolver)],
-    info={"description": "flask_restxtra_fluffy backend api"},
+    info={"description": "fluffy-flask backend api"},
 )
 converter: MarshmallowPlugin.Converter = spec.plugins[0].converter
 apidoc: Apidoc = Apidoc(

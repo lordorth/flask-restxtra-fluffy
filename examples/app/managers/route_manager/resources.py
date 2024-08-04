@@ -5,7 +5,7 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 14:07:42
-FilePath: /flask_restxtra_fluffy/examples/app/managers/route_manager/resources.py
+FilePath: /fluffy-flask/examples/app/managers/route_manager/resources.py
 """
 
 from http import HTTPStatus

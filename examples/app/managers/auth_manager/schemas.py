@@ -5,7 +5,7 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-14 20:22:14
-FilePath: /flask_restxtra_fluffy/examples/app/managers/auth_manager/schemas.py
+FilePath: /fluffy-flask/examples/app/managers/auth_manager/schemas.py
 """
 
 from marshmallow.fields import Nested, String

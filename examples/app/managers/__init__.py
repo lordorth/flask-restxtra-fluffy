@@ -5,7 +5,7 @@ Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 16:33:49
-FilePath: /flask_restxtra_fluffy/examples/app/managers/__init__.py
+FilePath: /fluffy-flask/examples/app/managers/__init__.py
 """
 
 from .auth_manager import auth_ns

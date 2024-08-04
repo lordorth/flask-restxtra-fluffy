@@ -1,11 +1,11 @@
 """
-Description: parameters of flask_restxtra_fluffy
+Description: parameters of fluffy-flask
 version: 0.1.1
 Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-16 14:15:27
-FilePath: /flask_restxtra_fluffy/flask_restxtra_fluffy/parameter.py
+FilePath: /fluffy-flask/fluffy-flask/parameter.py
 """
 
 import importlib

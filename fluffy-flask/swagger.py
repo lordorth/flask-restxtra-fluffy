@@ -1,11 +1,11 @@
 """
-Description: patched swagger of flask_restxtra_fluffy
+Description: patched swagger of fluffy-flask
 version: 0.1.1
 Author: 1746104160
 Date: 2023-06-02 12:56:56
 LastEditors: 1746104160 shaojiahong2001@outlook.com
 LastEditTime: 2023-06-04 21:45:14
-FilePath: /flask_restxtra_fluffy/flask_restxtra_fluffy/swagger.py
+FilePath: /fluffy-flask/fluffy-flask/swagger.py
 """
 
 from apispec.ext.marshmallow.common import get_fields
