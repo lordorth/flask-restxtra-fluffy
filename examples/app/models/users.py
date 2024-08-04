@@ -27,7 +27,7 @@ from sqlalchemy_utils import (
     observes,
 )
 
-from fluffy_flask import permission_required
+from fluffy-flask import permission_required
 
 
 @generic_repr

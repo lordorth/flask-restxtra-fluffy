@@ -13,7 +13,7 @@ from app.models import Routes
 from marshmallow import post_load, validate
 from marshmallow.fields import Integer, String
 
-from fluffy_flask import QueryParameters
+from fluffy-flask import QueryParameters
 
 
 class GetRoutesInfoParameters(QueryParameters):

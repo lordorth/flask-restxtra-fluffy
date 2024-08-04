@@ -20,7 +20,7 @@ from sqlalchemy import Boolean, Column, DateTime, Integer, String, exc, func
 from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy_utils import UUIDType, aggregated, generic_repr
 
-from fluffy_flask import permission_required
+from fluffy-flask import permission_required
 
 
 @generic_repr

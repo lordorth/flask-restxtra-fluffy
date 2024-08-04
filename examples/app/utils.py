@@ -15,7 +15,7 @@ import toml
 from flask import Blueprint
 from flask_caching import Cache
 
-from fluffy_flask import Api, SQLAlchemy
+from fluffy-flask import Api, SQLAlchemy
 
 PROJECT_CONFIG: dict = (
     poetry

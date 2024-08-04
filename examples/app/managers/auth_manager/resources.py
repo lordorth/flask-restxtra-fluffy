@@ -12,7 +12,7 @@ from http import HTTPStatus
 
 from flask import Response
 
-from fluffy_flask import Namespace, Resource
+from fluffy-flask import Namespace, Resource
 
 from .parameters import LoginParameters, RegisterParameters
 from .schemas import LoginSchema

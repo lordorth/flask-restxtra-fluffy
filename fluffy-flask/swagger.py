@@ -15,7 +15,7 @@ from flask_restx.utils import not_none
 from marshmallow.fields import Field, List
 from typing_extensions import override
 
-import fluffy_flask
+import fluffy-flask
 
 from .schema import Schema
 from .util import DEFAULT_FIELD_MAPPING, converter, get_default, get_description
@@ -45,7 +45,7 @@ class Swagger(OriginalSwagger):
             str: host name
         """
         hostname: str | None = current_app.config.get("SERVER_NAME", None)
-        self.api: fluffy_flask.Api
+        self.api: fluffy-flask.Api
         if hostname and self.api.blueprint and self.api.blueprint.subdomain:
             hostname = ".".join((self.api.blueprint.subdomain, hostname))
         if hostname is None:

@@ -1,18 +1,19 @@
 [tool.poetry]
-name = "fluffy_flask"
+#package-mode = false
+name = "fluffy-flask"
 version = "0.0.0"
 description = "A successful practice combining flask_restx with marshmallow"
 authors = ["Alexander Orth <alexander.orth@rub.de>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://github.com/lordorth/fluffy_flask"
-repository = "https://github.com/lordorth/fluffy_flask"
+homepage = "https://github.com/lordorth/fluffy-flask"
+repository = "https://github.com/lordorth/fluffy-flask"
 keywords = ["flask", "flask_restx", "sqlalchemy", "marshmallow"]
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3 :: Only",
     "Intended Audience :: Developers",
     "Topic :: Software Development",

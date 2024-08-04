@@ -15,7 +15,7 @@ from app.models import Roles, Users
 from marshmallow import ValidationError, post_load, validate, validates_schema
 from marshmallow.fields import UUID, Boolean, Integer, List, String
 
-from fluffy_flask import JSONParameters, QueryParameters
+from fluffy-flask import JSONParameters, QueryParameters
 
 from .schemas import UsersProfileSchema
 

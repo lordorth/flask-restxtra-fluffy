@@ -17,7 +17,7 @@ from flask_jwt_extended import create_access_token
 from marshmallow import post_load, validate
 from marshmallow.fields import String
 
-from fluffy_flask import JSONParameters
+from fluffy-flask import JSONParameters
 
 
 class LoginParameters(JSONParameters):

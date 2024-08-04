@@ -13,7 +13,7 @@ from http import HTTPStatus
 from app.config import Config
 from requests import Response
 
-from fluffy_flask import Namespace, Resource, permission_required
+from fluffy-flask import Namespace, Resource, permission_required
 
 from .parameters import GetRoutesInfoParameters
 from .schemas import RoutesInfoSchema
