@@ -13,7 +13,7 @@ from http import HTTPStatus
 from app.config import Config
 from flask import Response
 
-from flask_restxtra_fluffy import Namespace, Resource, permission_required
+from fluffy_flask import Namespace, Resource, permission_required
 
 from .parameters import (
     DeleteUserParameters,

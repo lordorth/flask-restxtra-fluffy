@@ -15,7 +15,7 @@ from datetime import datetime
 from app.models import Routes
 from marshmallow.fields import UUID, DateTime, Integer, List, Nested, String
 
-from flask_restxtra_fluffy import SQLAlchemySchema, StandardSchema
+from fluffy_flask import SQLAlchemySchema, StandardSchema
 
 
 class RoutesProfileSchema(SQLAlchemySchema):

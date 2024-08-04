@@ -18,7 +18,7 @@ from sqlalchemy import Column, DateTime, Integer, String, exc, func
 from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy_utils import UUIDType, aggregated, generic_repr
 
-from flask_restxtra_fluffy import permission_required
+from fluffy_flask import permission_required
 
 
 @generic_repr

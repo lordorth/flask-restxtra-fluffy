@@ -49,7 +49,7 @@ import sqlalchemy as sa
 from flask import Flask
 from marshmallow import fields, post_load
 
-from flask_restxtra_fluffy import (
+from fluffy_flask import (
     Api,
     JSONParameters,
     QueryParameters,

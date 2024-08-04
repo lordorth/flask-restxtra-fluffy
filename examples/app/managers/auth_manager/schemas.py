@@ -10,7 +10,7 @@ FilePath: /fluffy-flask/examples/app/managers/auth_manager/schemas.py
 
 from marshmallow.fields import Nested, String
 
-from flask_restxtra_fluffy import StandardSchema
+from fluffy_flask import StandardSchema
 
 
 class LoginSchema(StandardSchema):

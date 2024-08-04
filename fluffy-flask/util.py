@@ -67,7 +67,7 @@ from marshmallow.fields import (
 from sortedcontainers import SortedDict
 from werkzeug.datastructures import FileStorage
 
-import flask_restxtra_fluffy
+import fluffy_flask
 
 try:
     json: ModuleType = importlib.import_module("orjson")
@@ -338,7 +338,7 @@ def permission_required(
     return wrapper
 
 
-def ui_for(api: "flask_restxtra_fluffy.Api") -> str | None:
+def ui_for(api: "fluffy_flask.Api") -> str | None:
     """Render a SwaggerUI for a given API
 
     Args:

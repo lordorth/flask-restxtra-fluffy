@@ -23,7 +23,7 @@ from marshmallow.fields import (
     String,
 )
 
-from flask_restxtra_fluffy import SQLAlchemySchema, StandardSchema
+from fluffy_flask import SQLAlchemySchema, StandardSchema
 
 from ..route_manager.schemas import RoutesProfileSchema
 

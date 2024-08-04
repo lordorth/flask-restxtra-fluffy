@@ -23,7 +23,7 @@ from marshmallow.fields import (
     String,
 )
 
-from flask_restxtra_fluffy import SQLAlchemySchema, StandardSchema
+from fluffy_flask import SQLAlchemySchema, StandardSchema
 
 from ..role_manager.schemas import RolesProfileSchema
 
